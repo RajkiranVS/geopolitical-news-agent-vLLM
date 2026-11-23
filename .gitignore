@@ -1,0 +1,26 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+
+# MLflow tracking data (local traces & runs)
+mlflow.db
+mlruns/
+mlartifacts/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,13 @@
+[project]
+name = "geopolitical-news-agent-vllm"
+version = "0.1.0"
+description = "LangGraph news briefing agent running on a self-hosted Qwen model (vLLM), calling a get_feeds MCP tool hosted on AWS Lambda"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "boto3>=1.44.9",
+    "langchain>=1.5.2",
+    "langchain-mcp-adapters>=0.3.2",
+    "langchain-openai>=1.8.5",
+    "mlflow>=3.18.0",
+]
