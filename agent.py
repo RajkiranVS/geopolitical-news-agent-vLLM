@@ -24,9 +24,14 @@ if not SYSTEM_PROMPT:
 # MLflow tracing: every LLM call, tool call and agent step is logged as a span.
 mlflow.set_tracking_uri(os.environ.get("MLFLOW_TRACKING_URI", "http://127.0.0.1:5000"))
 mlflow.set_experiment(os.environ.get("MLFLOW_EXPERIMENT", "geopolitical-agent"))
-mlflow.langchain.autolog()
+mlflow.langchain.autolog() #type:ignore
 
-async def main():
+RECURSION_LIMIT = 6  # see the comment in run_query for why 6
+
+async def build_agent():
+    '''
+    Function to build the agent
+    '''
     api_key = get_api_key_from_secrets(secret_name=AWS_SECRET_NAME, region_name=AWS_REGION)
     tools = await get_geopolitical_feeds(api_key=api_key, lambda_url=AWS_LAMBDA_MCP_URL)
 
@@ -38,7 +43,11 @@ async def main():
         temperature=0.0,
         max_completion_tokens=800
     )
-    agent = create_agent(model=llm, tools=tools, system_prompt=SYSTEM_PROMPT)
+    return create_agent(model=llm, tools=tools, system_prompt=SYSTEM_PROMPT)
+
+async def main():
+    
+    agent = await build_agent()
 
     # Defined here so `query` is the only traced input; the agent comes from the closure
     # (otherwise MLflow shows the agent's memory address in the trace title).
@@ -51,7 +60,7 @@ async def main():
         try:
             response = await agent.ainvoke(
                 {"messages": [HumanMessage(content=query)]},
-                config={"recursion_limit": 6},
+                config={"recursion_limit": RECURSION_LIMIT},
             )
         except GraphRecursionError:
             return ("Sorry, I couldn't finish this briefing within the step limit. "
