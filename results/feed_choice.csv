@@ -155,3 +155,33 @@ schema_examples,vllm,9,optional,3,1,bbc_world;hindu_international;hindu_national
 schema_examples,vllm,10,optional,1,1,aljazeera_all,list,climate talks,
 schema_examples,vllm,10,optional,2,1,aljazeera_all,list,climate talks,
 schema_examples,vllm,10,optional,3,1,aljazeera_all,list,climate talks,
+shared_prompt,vllm,1,yes,1,1,aljazeera_all,str,Gaza ceasefire talks,
+shared_prompt,vllm,1,yes,2,1,aljazeera_all,str,Gaza ceasefire talks,
+shared_prompt,vllm,1,yes,3,1,aljazeera_all,str,Gaza ceasefire talks,
+shared_prompt,vllm,2,yes,1,0,,,,recursion_limit
+shared_prompt,vllm,2,yes,2,0,,,,recursion_limit
+shared_prompt,vllm,2,yes,3,0,,,,recursion_limit
+shared_prompt,vllm,3,yes,1,1,hindu_international,str,,
+shared_prompt,vllm,3,yes,2,1,hindu_international,str,,
+shared_prompt,vllm,3,yes,3,1,hindu_international,str,,
+shared_prompt,vllm,4,yes,1,1,bbc_world,str,Sahel,
+shared_prompt,vllm,4,yes,2,1,bbc_world,str,Sahel,
+shared_prompt,vllm,4,yes,3,1,bbc_world,str,Sahel,
+shared_prompt,vllm,5,no,1,0,,,,no_tool_call
+shared_prompt,vllm,5,no,2,0,,,,no_tool_call
+shared_prompt,vllm,5,no,3,0,,,,no_tool_call
+shared_prompt,vllm,6,no,1,1,hindu_national,str,,
+shared_prompt,vllm,6,no,2,1,hindu_national,str,,
+shared_prompt,vllm,6,no,3,1,hindu_national,str,,
+shared_prompt,vllm,7,no,1,1,hindu_international,list,RBI India economy,
+shared_prompt,vllm,7,no,2,1,hindu_international,list,RBI India economy,
+shared_prompt,vllm,7,no,3,1,hindu_international,list,RBI India economy,
+shared_prompt,vllm,8,optional,1,1,bbc_world;hindu_international;hindu_national;aljazeera_all,list,,
+shared_prompt,vllm,8,optional,2,1,bbc_world;hindu_international;hindu_national;aljazeera_all,list,,
+shared_prompt,vllm,8,optional,3,1,bbc_world;hindu_international;hindu_national;aljazeera_all,list,,
+shared_prompt,vllm,9,optional,1,1,bbc_world,str,US China trade,
+shared_prompt,vllm,9,optional,2,1,bbc_world,str,US China trade,
+shared_prompt,vllm,9,optional,3,1,bbc_world,str,US China trade,
+shared_prompt,vllm,10,optional,1,1,aljazeera_all,list,climate talks,
+shared_prompt,vllm,10,optional,2,1,aljazeera_all,list,climate talks,
+shared_prompt,vllm,10,optional,3,1,aljazeera_all,list,climate talks,

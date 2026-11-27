@@ -1,3 +1,4 @@
+import json
 import asyncio, csv, sys
 from pathlib import Path
 
@@ -11,18 +12,10 @@ RUNS = 3
 OUT = Path("results/feed_choice.csv")
 FIELDS = ["condition", "platform", "query_id", "expected", "run", "call_index", "feed", "feed_type", "keyword", "error"]
 
-QUERIES = [
-    (1, "What's the latest on the Gaza ceasefire talks?", "yes"),
-    (2, "What is happening in Sudan?", "yes"),
-    (3, "Any news from Lebanon?", "yes"),
-    (4, "What's going on in the Sahel?", "yes"),
-    (5, "Latest on Indian state elections", "no"),
-    (6, "What did India's Supreme Court rule recently?", "no"),
-    (7, "Any update on the RBI and India's economy?", "no"),
-    (8, "Latest on the war in Ukraine", "optional"),
-    (9, "What's new in US-China trade relations?", "optional"),
-    (10, "Any news on the climate talks?", "optional"),
-]
+with open('questions.json','r') as f:
+    queries_data = json.load(f)
+
+QUERIES = [(q.get('id'), q.get('query'), q.get('expected')) for q in queries_data]
 
 def _as_list(value) -> list[str]:
     if value is None:

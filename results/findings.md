@@ -364,3 +364,39 @@ R3-11. Foundry gpt-5.6-luna schema_examples, new chat per question (first clean 
 - Whether the reader got news depended more on keyword style and retry policy than on
   routing (R3-8, R3-9); with identical evidence, the models still differed on
   faithfulness (R3-10).
+
+## Round 3b — shared_prompt (vLLM only, planned 27 Nov)
+Qwen2.5-3B with gpt-5.6-luna's Foundry instructions copied verbatim (no EXAMPLES block;
+"drop one word, or use only the main country" retry hint; 3-6 bullets). Server unchanged
+(schema example kept), so the prompt is the only change from schema_examples.
+Previous vLLM prompt saved as results/prompts/vllm_schema_examples.md.
+R3b-1. shared_prompt result (Qwen + Foundry's prompt, schema example still served):
+     - feed sent as a STRING on 6 of 10 questions: 15 runs logged with a string first call, plus
+       the 3 Sudan runs that looped on string calls (logged as recursion_limit) = 18/30;
+       q2 Sudan hit the recursion limit (3 string calls, each rejected "Input should be a
+       valid list", never fixed); q5 elections made no tool call (empty reply, 32 tokens —
+       likely an unparsed tool call).
+     - AJ 3/12 on fits (only Gaza, and those calls were rejected as strings), 0/9 India.
+     - So the schema example ALONE did not fix the format. Comparing vLLM conditions:
+         schema_only     : keyword examples in prompt, no schema example -> 18/30 strings
+         schema_examples : keyword examples in prompt + schema example  -> 0/30 strings
+         shared_prompt   : no prompt examples      + schema example  -> 18/30 strings
+       The schema example worked only alongside the prompt's EXAMPLES block (examples showing
+       the "→ keyword:" call pattern), even though those examples never showed the feed
+       format. Can't tell from this which part of the block matters.
+     - Louis's "no prompt examples at all" test: FAILS for the 3B model. For large models it
+       was never needed.
+
+## Regression check (check_routing.py + questions.json), first run 27 Nov 20:13
+Rules per question in questions.json (must_exclude = fail, should_include = warning; first
+get_feeds call per run; non-list feed, no tool call and recursion limit also fail).
+Run: `uv run --env-file .env check_routing.py` (needs vLLM + live Lambda; not CI).
+Baseline result on the schema_examples setup: 21/30 passed, 9 failed, 3 warnings.
+- q8 Ukraine, q9 US-China: FAIL x3 each — hindu_national (schema example feed) leaks in.
+- q6 Supreme Court: FAIL x3 — recursion limit. MLflow: no keyword, then hindu_national ->
+  hindu_international -> bbc_world, 5 unrelated items each; Qwen feed-hops instead of
+  narrowing. Finished in 2 calls this morning; outcome depends on the day's news.
+- q7 RBI: WARN x3 — hindu_international instead of hindu_national (known since round 1).
+Known limit: live feeds make some failures news-dependent; a failure means "look", not
+"schema broken". Possible addition: must_have_keyword per question (news-independent).
+This is the baseline the one-item schema example has to beat.

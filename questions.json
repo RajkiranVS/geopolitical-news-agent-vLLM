@@ -1,0 +1,70 @@
+[
+  {"id": 1, "query": "What's the latest on the Gaza ceasefire talks?",
+   "expected": "yes",
+   "must_exclude": ["hindu_national"],
+   "should_include": ["aljazeera_all"],
+   "why": "Middle East story: Al Jazeera fits; Indian domestic news doesn't"},
+   {
+    "id":2, "query": "What is happening in Sudan?",
+    "expected": "yes",
+    "must_exclude": ["hindu_national"],
+    "should_include":["aljazeera_all"],
+    "why":"Africa story: Al Jazeera fits; Indian domestic news doesn't"
+   },
+   {
+    "id":3, "query": "Any news from Lebanon?",
+    "expected": "yes",
+    "must_exclude": ["hindu_national"],
+    "should_include":["aljazeera_all"],
+    "why":"Middle East story: Al Jazeera fits; Indian domestic news doesn't"
+    },
+   {
+    "id":4, "query": "What's going on in the Sahel?",
+    "expected": "yes",
+    "must_exclude": ["hindu_national"],
+    "should_include":["aljazeera_all"],
+    "why":"Africa story: Al Jazeera fits; Indian domestic news doesn't"
+   },
+   {
+    "id":5, "query":"Latest on Indian state elections",
+    "expected":"no",
+    "must_exclude":["aljazeera_all"],
+    "should_include":["hindu_national"],
+    "why":"Indian domestic story: Hindu National fits; Al Jazeera adds nothing"
+   },
+   {
+    "id": 6, "query":"What did India's Supreme Court rule recently?",
+    "expected":"no",
+    "must_exclude":["aljazeera_all"],
+    "should_include":["hindu_national"],
+    "why":"Indian domestic story: Hindu National fits; Al Jazeera adds nothing"
+   },
+   {
+    "id":7, "query":"Any update on the RBI and India's economy?",
+    "expected":"no",
+    "must_exclude":["aljazeera_all"],
+    "should_include":["hindu_national"],
+    "why":"Indian domestic story: Hindu National fits; Al Jazeera adds nothing"
+   },
+   {
+    "id":8, "query":"Latest on the war in Ukraine",
+    "expected":"optional",
+    "must_exclude":["hindu_national"],
+    "should_include":[],
+    "why":"World story: Indian domestic news doesn't fit; also catches the schema example's feeds leaking"
+   },
+   {
+    "id":9, "query":"What's new in US-China trade relations?",
+    "expected":"optional",
+    "must_exclude":["hindu_national"],
+    "should_include":[],
+    "why":"World story: Indian domestic news doesn't fit; also catches the schema example's feeds leaking"
+   },
+   {
+    "id":10, "query":"Any news on the climate talks?",
+    "expected":"optional",
+    "must_exclude":["hindu_national"],
+    "should_include":[],
+    "why":"World story: Indian domestic news doesn't fit; also catches the schema example's feeds leaking"
+   }
+]
